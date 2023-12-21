@@ -14,12 +14,12 @@ export default async function handler(req, res) {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer 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` // Ensure to use secure handling for API keys
+                    'Authorization': `Bearer ${process.env.OPENAI_API_KEY}` // Use the environment variable here
                 },
                 body: JSON.stringify({
                     prompt: prompt,
-                    max_tokens: 15,
-                    temperature: 0.7 // Adjust as needed for the desired level of creativity
+                    max_tokens: 100,
+                    temperature: 0.6 // Adjust as needed for the desired level of creativity
                 })
             });
 
