@@ -8,20 +8,22 @@ export default async function handler(req, res) {
             userMessage = "Ask an oncology question";
         }
         try {
-            const response = await fetch('https://api.openai.com/v1/...', {
+            const response = await fetch('https://api.openai.com/v1/engines/davinci/completions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer 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`
+                    'Authorization': `Bearer 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`
                 },
                 body: JSON.stringify({
                     prompt: userMessage,
-                    // other necessary parameters
+                    max_tokens: 150 // or another number of tokens you prefer
+                    // You can include other parameters as needed
                 })
             });
 
             const data = await response.json();
         // Check if userMessage is empty, if so, set a default message
+        console.log(data);
 
             if (data.choices && data.choices.length > 0) {
                 // Send back the AI's response
@@ -31,7 +33,6 @@ export default async function handler(req, res) {
                 res.status(200).json({ reply: "I'm sorry, I couldn't generate a response." });
             }
         } catch (error) {
-            // Handle fetch or API errors
             console.error('OpenAI API error:', error);
             res.status(500).json({ reply: "An error occurred while processing your request." });
         }

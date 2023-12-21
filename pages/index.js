@@ -78,10 +78,11 @@ export default function Home() {
                 </div>
                 <input
                     type="text"
-                    className={styles.inputField} 
+                    className={styles.inputField}
                     value={userInput}
                     onChange={handleInputChange}
-                    onKeyPress={handleKeyPress} // Added key press event
+                    onKeyPress={handleKeyPress}
+                    placeholder="Message OncologyChat" // Placeholder text added
                 />
                 <button
                     onClick={handleSubmit}
