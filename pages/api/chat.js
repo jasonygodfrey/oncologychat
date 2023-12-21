@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
         try {
             // Structuring the prompt for a conversational context
-            const prompt = `User: ${userMessage}\nBot:`;
+            const prompt = `Answer the following question: ${userMessage}`;
             const response = await fetch('https://api.openai.com/v1/engines/davinci/completions', {
                 method: 'POST',
                 headers: {
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
                 },
                 body: JSON.stringify({
                     prompt: prompt,
-                    max_tokens: 150,
+                    max_tokens: 15,
                     temperature: 0.7 // Adjust as needed for the desired level of creativity
                 })
             });

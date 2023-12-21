@@ -63,13 +63,16 @@
 }
 /* General styling for the chat container */
 .chatContainer {
-    display: flex;
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); /* Centers the container */
+    z-index: 1000; /* High z-index to bring it to the front */
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
     max-width: 600px;
-    margin: 20px auto;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -135,4 +138,14 @@
 
 .sendButton:hover {
     background-color: #0056b3;
+}
+
+.threeContainer {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+
 }

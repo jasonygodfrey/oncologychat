@@ -8,6 +8,13 @@ export default function Home() {
     const [chatHistory, setChatHistory] = useState([]);
 
     useEffect(() => {
+        if (mount.current) {
+            const mountPoint = mount.current;
+            initializeThreeJS(mountPoint);
+        }
+    }, []);
+
+    useEffect(() => {
         // Load chat history from localStorage when the component mounts
         const savedChatHistory = localStorage.getItem('chatHistory');
         if (savedChatHistory) {
@@ -67,7 +74,7 @@ export default function Home() {
             <Head>
                 {/* ... Head content ... */}
             </Head>
-
+            <div ref={mount} className={styles.threeContainer} />
             <div className={styles.chatContainer}>
                 <div className={styles.chatHistory}>
                     {chatHistory.map((chat, index) => (

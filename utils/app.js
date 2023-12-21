@@ -4,6 +4,7 @@ import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DeviceOrientationControls } from 'three-stdlib';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 export function initializeThreeJS(mountPoint) {
     const clock = new THREE.Clock();
@@ -20,25 +21,41 @@ export function initializeThreeJS(mountPoint) {
 
     mountPoint.appendChild(renderer.domElement);
 
+    const controls = new OrbitControls(camera, renderer.domElement);
+// Create a red square (cube)
+const geometry = new THREE.BoxGeometry(1, 1, 1); // 1x1x1 cube
+const material = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Red color
+const cube = new THREE.Mesh(geometry, material);
+
+// Position the cube at the center of the scene
+cube.position.set(0, 0, 0);
+
+// Add the cube to the scene
+//scene.add(cube);
     // Load the GLTF model
     let mixer; // Animation mixer
     const loader = new GLTFLoader();
-    loader.load('sushiresturantkit/scene.gltf', function (gltf) {
-        gltf.scene.scale.set(1, 1, 1);
+    loader.load('oncology/scene.gltf', function (gltf) {
+        gltf.scene.scale.set(10, 10, 10); // Scale down the model
         scene.add(gltf.scene);
-        scene.position.x -= 15;
-        scene.position.y -= 3;
+        gltf.scene.position.set(0, 0, 0); // Move the model to the right
+
         if (gltf.animations && gltf.animations.length) {
             mixer = new THREE.AnimationMixer(gltf.scene);
             const action = mixer.clipAction(gltf.animations[0]);
             action.play();
         }
+        gltf.scene.traverse(function (node) {
+            if (node.isMesh) {
+              //  node.material.color.set(0x000000); // Set color to black
+            }
+        });
     }, undefined, function (error) {
         console.error(error);
     });
 
     // Create lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
     scene.add(ambientLight);
 
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
@@ -58,7 +75,7 @@ export function initializeThreeJS(mountPoint) {
 
     const composer = new EffectComposer(renderer);
     composer.addPass(renderScene);
-    composer.addPass(bloomPass);
+   // composer.addPass(bloomPass);
 
     // Handle window resize
     function onWindowResize() {
