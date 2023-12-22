@@ -64,8 +64,8 @@ export default function Home() {
         // Add user message and GPT-3 response to chat history
         setChatHistory(prevChatHistory => [
             ...prevChatHistory, 
-            { sender: 'user', message: userMessage },
-            { sender: 'bot', message: data.reply }
+            { sender: 'User', message: userMessage },
+            { sender: 'Bot', message: data.reply }
         ]);
     };
 

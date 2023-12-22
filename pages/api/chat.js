@@ -31,7 +31,7 @@ export default async function handler(req, res) {
                 res.status(200).json({ reply: data.choices[0].text.trim() });
             } else {
                 // Handle no choices in response
-                res.status(200).json({ reply: "I'm sorry, I couldn't generate a response." });
+                res.status(200).json({ reply: "Thank you for trialing OncologyChat! Due to high question volume, the API rate is at it's cap. Please retry your question later." });
             }
         } catch (error) {
             console.error('OpenAI API error:', error);
