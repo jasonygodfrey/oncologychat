@@ -6,7 +6,12 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DeviceOrientationControls } from 'three-stdlib';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
+
 export function initializeThreeJS(mountPoint) {
+    if (!mountPoint) {
+        console.error("Mount point is null. Cannot initialize ThreeJS.");
+        return;
+    }
     const clock = new THREE.Clock();
     let mouse = new THREE.Vector2();
 
@@ -118,4 +123,7 @@ cube.position.set(0, 0, 0);
     window.addEventListener('wheel', (event) => {
         zoom(event.deltaY > 0 ? 1 : -1);
     });
+
+
 }
+

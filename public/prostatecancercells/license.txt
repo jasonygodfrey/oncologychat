@@ -1,0 +1,11 @@
+Model Information:
+* title:	Prostate Cancer Cells
+* source:	https://sketchfab.com/3d-models/prostate-cancer-cells-79074dd4d9c64bd9af4c0e34eff4d2b8
+* author:	Glasgow Life Sciences (https://sketchfab.com/GLS)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Prostate Cancer Cells" (https://sketchfab.com/3d-models/prostate-cancer-cells-79074dd4d9c64bd9af4c0e34eff4d2b8) by Glasgow Life Sciences (https://sketchfab.com/GLS) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

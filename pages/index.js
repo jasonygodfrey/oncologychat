@@ -1,21 +1,20 @@
+// pages/index.js
 import React, { useRef, useEffect, useState } from 'react';
 import Head from 'next/head';
 import styles from './Home.module.css';
-import { initializeThreeJS } from '../utils/app.js';
+import { initializeThreeJS, loadModel } from '../utils/app.js'; // Import the new function
 
 export default function Home() {
     const mount = useRef(null);
+    const chatHistoryRef = useRef(null); // Ref for the chat history container
     const [chatHistory, setChatHistory] = useState([]);
+    const [userInput, setUserInput] = useState('');
 
-    useEffect(() => {
-        if (mount.current) {
-            const mountPoint = mount.current;
-            initializeThreeJS(mountPoint);
-        }
-    }, []);
 
+
+
+    // Load chat history from localStorage and initialize ThreeJS
     useEffect(() => {
-        // Load chat history from localStorage when the component mounts
         const savedChatHistory = localStorage.getItem('chatHistory');
         if (savedChatHistory) {
             setChatHistory(JSON.parse(savedChatHistory));
@@ -27,24 +26,30 @@ export default function Home() {
         }
     }, []);
 
+    // Save chatHistory to localStorage and scroll to bottom
     useEffect(() => {
-        // Save chatHistory to localStorage whenever it changes
         localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+        if (chatHistoryRef.current) {
+            const scrollHeight = chatHistoryRef.current.scrollHeight;
+            chatHistoryRef.current.scrollTo(0, scrollHeight);
+        }
     }, [chatHistory]);
 
+    
+
+    // Handle input change
     const handleInputChange = (event) => {
         setUserInput(event.target.value);
     };
 
+    // Handle key press
     const handleKeyPress = (event) => {
-        // Check if the Enter key is pressed
         if (event.key === 'Enter') {
             handleSubmit();
         }
     };
 
-    const [userInput, setUserInput] = useState('');
-
+    // Handle submit
     const handleSubmit = async () => {
         console.log("handleSubmit called");
         let userMessage = userInput;
@@ -63,7 +68,7 @@ export default function Home() {
 
         // Add user message and GPT-3 response to chat history
         setChatHistory(prevChatHistory => [
-            ...prevChatHistory, 
+            ...prevChatHistory,
             { sender: 'User', message: userMessage },
             { sender: 'Bot', message: data.reply }
         ]);
@@ -73,10 +78,11 @@ export default function Home() {
         <div>
             <Head>
                 {/* ... Head content ... */}
-            </Head>
+                </Head>
+                
             <div ref={mount} className={styles.threeContainer} />
             <div className={styles.chatContainer}>
-                <div className={styles.chatHistory}>
+                <div ref={chatHistoryRef} className={styles.chatHistory}>
                     {chatHistory.map((chat, index) => (
                         <p key={index}>
                             <strong>{chat.sender}:</strong> {chat.message}
@@ -89,7 +95,7 @@ export default function Home() {
                     value={userInput}
                     onChange={handleInputChange}
                     onKeyPress={handleKeyPress}
-                    placeholder="Message OncologyChat" // Placeholder text added
+                    placeholder="Message OncologyChat"
                 />
                 <button
                     onClick={handleSubmit}
@@ -97,7 +103,10 @@ export default function Home() {
                 >
                     Send
                 </button>
+                <button id="preview-button">Preview 3D Models</button>
             </div>
+            
         </div>
+        
     );
 }
